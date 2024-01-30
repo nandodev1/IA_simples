@@ -1,0 +1,8 @@
+
+bin/Debug/
+
+*.cbp
+
+IA_LAB/
+
+*.o
