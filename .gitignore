@@ -6,3 +6,9 @@ bin/Debug/
 IA_LAB/
 
 *.o
+
+.vscode/
+
+*.depend
+
+*.layout
