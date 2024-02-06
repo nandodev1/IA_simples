@@ -20,7 +20,7 @@ Perceptron::Perceptron( int quant_entradas, string tipo_saida)
 //retorna um valor aleatório entre 0 -1
 float Perceptron::random()
 {
-    float random = (float)(rand()%10000) / 100000;
+    float random = (float)(rand()%10000) / 10000;
     if( rand() % 2)
         return random = random;
     return random * -1;

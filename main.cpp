@@ -19,8 +19,8 @@ int main()
         entr_treino[1] = -1;
         neuro->treinamento( entr_treino, 1, 0.5);
     }
-    entr_treino[0] = 1;
-    entr_treino[1] = 1;
+    entr_treino[0] = -1;
+    entr_treino[1] = -1;
     cout <<  neuro->saida( entr_treino) << endl;
     return 0;
 }
