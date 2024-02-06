@@ -1,4 +1,4 @@
-#include "Perceptron.h"
+#include "../include/Perceptron.h"
 #include <cstdlib>
 #include <ctime>
 #include <math.h>
@@ -8,10 +8,10 @@ Perceptron::Perceptron( int quant_entradas, string tipo_saida)
     this->quant_entradas = quant_entradas;
     this->tipo_saida = tipo_saida;
     this->bias = 1;
-    this->peso_bias = this->random() * -1;
     this->pesos = new float[ this->quant_entradas];
-
+    srand(time(0)); //garante valores aleatórios a cada execução do programa.
     //Preenche pesos com valores aleatórios
+    this->peso_bias = this->random();
     for( int i = 0; i < this->quant_entradas; i++)
     {
         this->pesos[i] = this->random() * -1;
@@ -20,11 +20,10 @@ Perceptron::Perceptron( int quant_entradas, string tipo_saida)
 //retorna um valor aleatório entre 0 -1
 float Perceptron::random()
 {
-    int seed = time(0);
-    srand(seed);
-    float random = (float)(rand()%10000);
-    random = random / 100000;
-    return random;
+    float random = (float)(rand()%10000) / 100000;
+    if( rand() % 2)
+        return random = random;
+    return random * -1;
 }
 
 //Recepe as entradas do perceptron e devolve o somatorio dos produtos
@@ -66,10 +65,12 @@ float Perceptron::saida( float *entradas)
 void Perceptron::treinamento( float * entradas, float saida_esperada, float taxa_aprendizado)
 {
     float saida_prevista = this->saida( entradas);
-    float delta = saida_esperada - saida_prevista;
-    this->peso_bias += taxa_aprendizado*delta;
-    for ( int i = 0; i < this->quant_entradas; i++)
-        this->pesos[i] += taxa_aprendizado*delta*entradas[i];
+    if (float delta = saida_esperada - saida_prevista)
+    {
+        this->peso_bias += taxa_aprendizado*delta;
+        for ( int i = 0; i < this->quant_entradas; i++)
+            this->pesos[i] += taxa_aprendizado*delta*entradas[i];
+    }
 }
 
 Perceptron::~Perceptron()

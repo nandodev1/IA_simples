@@ -12,3 +12,7 @@ IA_LAB/
 *.depend
 
 *.layout
+
+main
+
+*.py
