@@ -12,13 +12,13 @@ using namespace std;
 class Camada
 {
     private:
-        vector<Perceptron> neuronios;
         //Guarda os ultimos valores da ultima computação
         vector<float> entradas;
         vector<float> saidas;
     
     public:
 
+        vector<Perceptron> neuronios;
         Camada( int quant_entradas, int quant_saidas);
         vector<float> saida(vector<float> entradas);
         vector<Perceptron> get_neuronios();
