@@ -19,13 +19,13 @@ class Perceptron
         int quant_entradas;
         string tipo_saida;
         float bias;
-        float peso_bias;
 
     public:
         Perceptron();
         Perceptron( int quant_entradas, string tipo_saida);
         virtual ~Perceptron();
         vector<float> pesos;
+        float peso_bias;
         float random();
         float somatorio(vector<float> entradas);
         float ativacao_sigm( float somatorio);
@@ -85,7 +85,7 @@ float Perceptron::ativacao_sigm( float somatorio)
 float Perceptron::ativacao_relu( float somatorio)
 {
     if ( somatorio <= 0)
-        return -1;
+        return 0;
     return 1;
 }
 
