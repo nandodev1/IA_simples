@@ -21,7 +21,7 @@ class Camada
         vector<Perceptron> neuronios;
         Camada( int quant_entradas, int quant_saidas);
         vector<float> saida(vector<float> entradas);
-        vector<Perceptron> get_neuronios();
+        void set_pesos( vector<float> entradas);
         vector<float> get_pesos();
         ~Camada();
 };
@@ -44,19 +44,30 @@ vector<float> Camada::get_pesos()
     return pesos;
 }
 
-vector<Perceptron> Camada::get_neuronios()
+void Camada::set_pesos( vector<float> entradas)
 {
-    return this->neuronios;
+    int quant_entradas = this->entradas.size();
+    int i = 0;
+    for( int i_neuronio = 0; i_neuronio < this->neuronios.size(); i_neuronio++)
+    {
+        this->neuronios[i_neuronio].peso_bias = entradas[i++];
+        for ( int i_pesos = 0; i_pesos < quant_entradas; i_pesos++)
+        {
+            this->neuronios[i_neuronio].pesos[i_pesos] = entradas[ i++];
+        }
+    }
 }
 
 Camada::Camada( int quant_entradas, int quant_saidas)
 {
     for ( int i = 0; i < quant_entradas;i++)
         this->entradas.push_back(0);
-        this->saidas.push_back(0);
 
     for ( int i = 0; i < quant_saidas; i++)
+    {
         this->neuronios.push_back( Perceptron( quant_entradas, SAIDA_RELU));
+        this->saidas.push_back(0);
+    }   
 };
 
 
