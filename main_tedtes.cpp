@@ -12,7 +12,7 @@ int main()
     camada_1->set_pesos({ -0.5, 1, 1, -1.5, 1, 1});
     camada_saida->set_pesos({-0.5, 1, -2});
 
-    vector<float> input = { 1, 1};
+    vector<float> input = { -1, -1};
     vector<float> saida_camada_1;
 
     saida_camada_1 = camada_1->saida( input);
