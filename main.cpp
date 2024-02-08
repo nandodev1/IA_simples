@@ -1,6 +1,6 @@
 #include <iostream>
-#include "include/Perceptron.h"
-#include "include/Camada.h"
+#include "./include/Perceptron.h"
+#include "./include/Camada.h"
 
 
 void testes_redes();
@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {   
-    testes_framework();
+    testes_redes();
     return 0;
 }
 
@@ -29,7 +29,7 @@ void testes_redes()
     camada_1->set_pesos({ -0.5, 1, 1, -1.5, 1, 1});
     camada_saida->set_pesos({-0.5, 1, -2});
 
-    vector<float> input = { 1, 1};
+    vector<float> input = { 0, 1};
     vector<float> saida_camada_1;
 
     saida_camada_1 = camada_1->saida( input);
