@@ -21,26 +21,17 @@ class Framework
         Framework(string titulo, int largura, int altura, int * argc, char * argv[]);
         ~Framework();
         void inicializa();
-        void quadrado( float x, float y);
 };
-
-void Framework::quadrado( float x, float y)
-{
-    glBegin(GL_QUADS);
-        glVertex2f( x - 0.5, y + 0.5);
-        glVertex2f( x - 0.5, y - 0.5);
-        glVertex2f( x + 0.5, y - 0.5);
-        glVertex2f( x + 0.5, y + 0.5);
-    glEnd();
-}
 
 Framework::Framework(string titulo, int largura, int altura, int * argc, char * argv[])
 {
-    
+
+	TAMANHO_TELA_X = largura;
+	TAMANHO_TELA_Y = altura;
     glutInit( argc, argv);
     glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize( largura, altura);
-     glutInitWindowPosition(100,100);
+     glutInitWindowPosition(200,100);
     glutCreateWindow( "IA_simples");
     inicializa();
     glutDisplayFunc( desenha) ;
@@ -100,8 +91,10 @@ void desenha(void)
     glColor3f(1.0f, 0.0f, 0.0f);
 
     // Desenha tudo que estiver na função loop da loop.h
-
-    loop();
+	glTranslatef( -1, -1, 0);
+	glPushMatrix();
+		loop();
+    glPopMatrix();
     
     // Desenha um quadrado preenchido com a cor corrente
 

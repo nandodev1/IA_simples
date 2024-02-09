@@ -7,10 +7,10 @@ void setup()
 }
 
 float y = 0;
-float x = 0;
 
 void loop()
-{   
-    y += 0.0001;
-    retangulo( x, y, 0.1, 0.1);
+{
+    y += 0.1;
+    retangulo( y, y, 25.0, 25.0, { 100, 250, 50});
+	
 }
