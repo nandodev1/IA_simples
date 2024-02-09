@@ -6,9 +6,11 @@ using namespace std;
 
 void desenha(void);
 void altera_tamanho_janela(GLsizei w, GLsizei h);
+void redesenha();
 
 //Referancia para criação da classe
 // https://www.inf.pucrs.br/~manssour/OpenGL/PrimeiroPrograma.html
+// https://homepages.ecs.vuw.ac.nz/~roma/glut.pdf
 class Framework
 {
     private:
@@ -22,15 +24,21 @@ class Framework
 
 Framework::Framework(string titulo, int largura, int altura, int * argc, char * argv[])
 {
-    glutInit(argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutCreateWindow("IA_simple");
+    
+    glutInit( argc, argv);
+    glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize( largura, altura);
-    glutInitWindowPosition(10,10);
-    glutReshapeFunc(altera_tamanho_janela);
-	glutDisplayFunc(desenha);
-	this->inicializa();
-	glutMainLoop();
+     glutInitWindowPosition(100,100);
+    glutCreateWindow( "IA_simples");
+    inicializa();
+    glutDisplayFunc( desenha) ;
+    glutIdleFunc(redesenha);
+    // glutFullScreen();
+    glutMainLoop();
+}
+void redesenha()
+{
+    glutPostRedisplay();
 }
 
 // Função callback chamada quando o tamanho da janela é alterado 
@@ -43,7 +51,7 @@ void altera_tamanho_janela(GLsizei w, GLsizei h)
                    glViewport(0, 0, w, h);
 
                    // Inicializa o sistema de coordenadas
-                   glMatrixMode(GL_PROJECTION);
+                   glMatrixMode(GL_3D);
                    glLoadIdentity();
 
                 //    // Estabelece a janela de seleção (left, right, bottom, top)
@@ -62,35 +70,73 @@ Framework::~Framework()
 void Framework::inicializa (void)
 {   
     // Define a cor de fundo da janela de visualização como preta
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 }
+
+float i = 0;
 
 // Função callback chamada para fazer o desenho
 void desenha(void)
-{
-	//Limpa a janela de visualização com a cor de fundo especificada 
-	glClear(GL_COLOR_BUFFER_BIT);
-
+{ 
     glMatrixMode(GL_MODELVIEW);
-     glLoadIdentity();
+    glLoadIdentity();
                    
-     // Limpa a janela de visualização com a cor de fundo especificada
-     glClear(GL_COLOR_BUFFER_BIT);
+    // Limpa a janela de visualização com a cor de fundo especificada
+    glClear(GL_COLOR_BUFFER_BIT);
 
-     // Especifica que a cor corrente é vermelha
-     //         R     G     B
-     glColor3f(1.0f, 0.0f, 0.0f);
+    // Especifica que a cor corrente é vermelha
+    //         R     G     B
+    glColor3f(1.0f, 0.0f, 0.0f);
 
-     // Desenha um quadrado preenchido com a cor corrente
-     glBegin(GL_QUADS);
-               glVertex2i(100,150);
-               glVertex2i(100,100);
-               // Especifica que a cor corrente é azul
-               glColor3f(0.0f, 0.0f, 1.0f);
-               glVertex2i(150,100);
-               glVertex2i(150,150);               
-     glEnd();
+    // Desenha um quadrado preenchido com a cor corrente
+    
+    // Desenha um quadrado preenchido com a cor corrente
+    i += 3;
+    glRotatef( i, 0, 0, -1);
+    glPushMatrix();
+        glTranslatef( 0.5, 0, 0);
+        glRotated( i, 0, 1, 0);
+        glutWireTeapot( 0.2);
+    glPopMatrix();
 
-	//Executa os comandos OpenGL 
-	glFlush();
+    glPushMatrix();
+        glTranslatef( -0.5, 0, 0.7);
+        glRotated( i+180, 0, 1, 0);
+        glutWireTeapot( 0.2);
+    glPopMatrix();
+
+    glPushMatrix();
+        glRotated( i, 0, 1, 0);
+        glutWireTorus( 0.05, 0.15, 15, 15);
+    glPopMatrix();
+
+    for (int j=0; j< 1000; j++)
+    {
+    glPushMatrix();
+        glColor3f( 0.0f, 1.0f, 0.0f);
+        glTranslatef( 0, j / 10, 0);
+        glRotated( i*2, 0, 0, 1);
+        glBegin(GL_QUADS);
+            glVertex2f( 0.2, 0.2);
+            glVertex2f( -0.2, 0.2);
+            glVertex2f( -0.2, -0.2);
+            glVertex2f( 0.2, -0.2);
+        glEnd();
+    glPopMatrix();
+    }
+
+    glPushMatrix();
+        glColor3f( 1.0f, 1.0f, 0.0f);
+        glTranslatef( 0, -0.6, 0);
+        glRotated( i*2, 0, 0, 1);
+        glBegin(GL_QUADS);
+            glVertex2f( 0.2, 0.2);
+            glVertex2f( -0.2, 0.2);
+            glVertex2f( -0.2, -0.2);
+            glVertex2f( 0.2, -0.2);
+        glEnd();
+    glPopMatrix();
+
+    // Executa os comandos OpenGL
+    glFlush();
 }

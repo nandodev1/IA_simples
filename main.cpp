@@ -9,17 +9,15 @@ void testes_framework(int * argc, char * argv[]);
 
 using namespace std;
 
-int main(int argc, char * argv[])
-{   
+int main( int argc, char * argv[])
+{
     testes_framework( &argc, argv);
-    return 0;
 }
 
 
 void testes_framework(int * argc, char * argv[])
 {
-    Framework * fw = new Framework( "Ai_simple", 500, 500, argc, argv);
-    cout << "Tudo ok" << endl;
+    Framework * fw = new Framework( "Ai_simple", 800, 800, argc, argv);
 }
 
 void testes_redes()
