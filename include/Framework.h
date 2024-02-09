@@ -1,6 +1,7 @@
-
 #include<GL/glut.h>
 #include<string>
+
+#include "loop.h"
 
 using namespace std;
 
@@ -20,7 +21,18 @@ class Framework
         Framework(string titulo, int largura, int altura, int * argc, char * argv[]);
         ~Framework();
         void inicializa();
+        void quadrado( float x, float y);
 };
+
+void Framework::quadrado( float x, float y)
+{
+    glBegin(GL_QUADS);
+        glVertex2f( x - 0.5, y + 0.5);
+        glVertex2f( x - 0.5, y - 0.5);
+        glVertex2f( x + 0.5, y - 0.5);
+        glVertex2f( x + 0.5, y + 0.5);
+    glEnd();
+}
 
 Framework::Framework(string titulo, int largura, int altura, int * argc, char * argv[])
 {
@@ -33,6 +45,7 @@ Framework::Framework(string titulo, int largura, int altura, int * argc, char * 
     inicializa();
     glutDisplayFunc( desenha) ;
     glutIdleFunc(redesenha);
+    setup();
     // glutFullScreen();
     glutMainLoop();
 }
@@ -70,10 +83,8 @@ Framework::~Framework()
 void Framework::inicializa (void)
 {   
     // Define a cor de fundo da janela de visualização como preta
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
-
-float i = 0;
 
 // Função callback chamada para fazer o desenho
 void desenha(void)
@@ -88,55 +99,12 @@ void desenha(void)
     //         R     G     B
     glColor3f(1.0f, 0.0f, 0.0f);
 
-    // Desenha um quadrado preenchido com a cor corrente
+    // Desenha tudo que estiver na função loop da loop.h
+
+    loop();
     
     // Desenha um quadrado preenchido com a cor corrente
-    i += 3;
-    glRotatef( i, 0, 0, -1);
-    glPushMatrix();
-        glTranslatef( 0.5, 0, 0);
-        glRotated( i, 0, 1, 0);
-        glutWireTeapot( 0.2);
-    glPopMatrix();
 
-    glPushMatrix();
-        glTranslatef( -0.5, 0, 0.7);
-        glRotated( i+180, 0, 1, 0);
-        glutWireTeapot( 0.2);
-    glPopMatrix();
-
-    glPushMatrix();
-        glRotated( i, 0, 1, 0);
-        glutWireTorus( 0.05, 0.15, 15, 15);
-    glPopMatrix();
-
-    for (int j=0; j< 1000; j++)
-    {
-    glPushMatrix();
-        glColor3f( 0.0f, 1.0f, 0.0f);
-        glTranslatef( 0, j / 10, 0);
-        glRotated( i*2, 0, 0, 1);
-        glBegin(GL_QUADS);
-            glVertex2f( 0.2, 0.2);
-            glVertex2f( -0.2, 0.2);
-            glVertex2f( -0.2, -0.2);
-            glVertex2f( 0.2, -0.2);
-        glEnd();
-    glPopMatrix();
-    }
-
-    glPushMatrix();
-        glColor3f( 1.0f, 1.0f, 0.0f);
-        glTranslatef( 0, -0.6, 0);
-        glRotated( i*2, 0, 0, 1);
-        glBegin(GL_QUADS);
-            glVertex2f( 0.2, 0.2);
-            glVertex2f( -0.2, 0.2);
-            glVertex2f( -0.2, -0.2);
-            glVertex2f( 0.2, -0.2);
-        glEnd();
-    glPopMatrix();
-
-    // Executa os comandos OpenGL
+// Executa os comandos OpenGL
     glFlush();
 }
