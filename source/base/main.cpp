@@ -1,7 +1,7 @@
 #include <iostream>
-#include "./include/Perceptron.h"
-#include "./include/Camada.h"
-#include "./include/Framework.h"
+#include "../IA/Perceptron.h"
+#include "../IA/Camada.h"
+#include "../display/Framework.h"
 
 
 void testes_redes();
@@ -17,7 +17,7 @@ int main( int argc, char * argv[])
 
 void testes_framework(int * argc, char * argv[])
 {
-    Framework * fw = new Framework( "Ai_simple", 800, 800, argc, argv);
+    Framework * fw = new Framework( "Ai_simple", 500, 500, argc, argv);
 }
 
 void testes_redes()

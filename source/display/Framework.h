@@ -1,7 +1,10 @@
+#if !defined(FRAMEWORK_H)
+#define FRAMEWORK_H
+
 #include<GL/glut.h>
 #include<string>
 
-#include "loop.h"
+#include "../init.cpp"
 
 using namespace std;
 
@@ -101,3 +104,5 @@ void desenha(void)
 // Executa os comandos OpenGL
     glFlush();
 }
+
+#endif // FRAMEWORK_H
