@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../IA/Perceptron.h"
-#include "../IA/Camada.h"
+#include "../IA/base/Perceptron.h"
+#include "../IA/base/Camada.h"
 #include "../display/Framework.h"
 
 
@@ -32,7 +32,7 @@ void testes_redes()
     vector<float> saida_camada_1;
 
     saida_camada_1 = camada_1->saida( input);
-    
+
     float saida_camada_saida = camada_saida->saida(saida_camada_1)[0];
     cout << saida_camada_saida << endl;
 }
