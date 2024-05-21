@@ -4,7 +4,7 @@
 #include<GL/glut.h>
 #include<string>
 
-#include"Formas.h"
+#include "Formas.h"
 #include "../init.cpp"
 
 using namespace std;

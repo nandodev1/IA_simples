@@ -10,12 +10,21 @@ class Agente
 	private:
 		float x;
 		float y;
+		vector<float> color = {0, 0, 0};
 	public:
 		vector<float> getPosition();
 		Agente( float x, float y);
 		void update();
 		void draw();
+		void setColor(vector<float>);
 };
+//seleciona cor do agente
+void Agente::setColor(vector<float> color)
+{
+	this->color[0] = color[0];
+	this->color[1] = color[1];
+	this->color[2] = color[2];
+}
 
 Agente::Agente( float x, float y)
 {
@@ -30,11 +39,12 @@ vector<float> Agente::getPosition()
 
 void Agente::update()
 {
+	this->y +=0.01;
 	this->draw();
 }
 void Agente::draw()
 {
-    retangulo( 300, 100, 15.0, 15.0, { 100, 250, 50});
+    retangulo(this->x, this->y, 15.0, 15.0,{this->color[0], this->color[1], this->color[2]});
 }
 
 #endif

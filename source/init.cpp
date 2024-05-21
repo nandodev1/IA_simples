@@ -1,19 +1,25 @@
-#include "IA/Agente.h"
+#include "./IA/agente.h"
 
 void setup()
 {
 
 }
 
-float y = 0;
-Agente * ag1 = new Agente();
+Agente * ag1 = new Agente(400, 200);
+Agente * ag2 = new Agente(300, 200);
+Agente * ag3 = new Agente(200, 200);
 
 void loop()
-{
-    y += 0.1;
+{    
+    //adiciona agente
     
-    retangulo( 100, y+ 50, 15.0, 15.0, { 100, 50, 50});
-    retangulo( y, y+ 50, 15.0, 15.0, { 100, 150, 50});
-	
+    ag1->update();
+    ag1->setColor({255, 0, 0});
+  
+    ag2->update();
+    ag2->setColor({0, 250, 50});
+    
+    ag3->update();
+    ag3->setColor({200, 250, 50});
 }
     

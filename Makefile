@@ -3,12 +3,14 @@ MAIN_TESTE=./source/IA/main_teste.cpp
 LIB_DEP=/lib/x86_64-linux-gnu/libglut.so /lib/x86_64-linux-gnu/libGL.so
 OUT_DIR=./bin
 CPP=/usr/bin/g++
+LIB=./source/
 
 all: copilar executar
 
 copilar: ${MAIN}
-	mkdir ${OUT_DIR}
-	${CPP} ${MAIN} -lm ${LIB_DEP} -o ${OUT_DIR}/main -g
+	# Control will enter here if $DIRECTORY doesn't exist.
+	if [ ! -d ${OUT_DIR} ]; then mkdir ${OUT_DIR};fi
+	${CPP} ${MAIN} -I ${LIB} -lm ${LIB_DEP} -o ${OUT_DIR}/main -g
 
 executar: ${OUT_DIR}/main
 	${OUT_DIR}/main
