@@ -2,6 +2,7 @@
 #define AGENTE_H
 
 #include <vector>
+#include "./base/Camada.h"
 
 #define CIMA 0
 #define BAIXO 1
@@ -17,6 +18,8 @@ class Agente
 		float y;
 		vector<float> color = {0, 0, 0};
 		void mover( uint8_t direcao);
+		Camada * rede;
+		void procSaida();
 	public:
 		vector<float> getPosition();
 		Agente( float x, float y);
@@ -48,7 +51,10 @@ void Agente::setColor(vector<float> color)
 
 Agente::Agente( float x, float y)
 {
-	this->speed = 0.1;
+	this->speed = 0.01;
+	
+	this->rede = new Camada(4, 4);
+	
 	this->x = x;
 	this->y = y;
 }
@@ -58,9 +64,20 @@ vector<float> Agente::getPosition()
 	return { this->x, this->y};
 }
 
+void Agente::procSaida()
+{
+	float dir = this->rede->saida({this->x,this->y, 1, 1})[0];
+	float dir2 = this->rede->saida({this->x,this->y, 1, 1})[1];
+	float dir3 = this->rede->saida({this->x,this->y, 1, 1})[2];
+	float dir4 = this->rede->saida({this->x,this->y, 1, 1})[3];
+	
+
+	this->mover(2);
+}
+
 void Agente::update()
 {
-	this->mover(BAIXO);
+	this->procSaida();
 	this->draw();
 }
 void Agente::draw()

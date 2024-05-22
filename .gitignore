@@ -16,3 +16,5 @@ IA_LAB/
 main
 
 *.py
+
+bin/

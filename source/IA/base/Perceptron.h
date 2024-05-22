@@ -22,7 +22,7 @@ class Perceptron
 
     public:
         Perceptron();
-        Perceptron( int quant_entradas, string tipo_saida);
+        Perceptron( int quant_entradas,const string &tipo_saida);
         virtual ~Perceptron();
         vector<float> pesos;
         float peso_bias;
@@ -30,7 +30,7 @@ class Perceptron
         float somatorio(vector<float> entradas);
         float ativacao_sigm( float somatorio);
         float ativacao_relu( float somatorio);
-        float saida( vector<float> entradas);
+        float saida(const vector<float> &entradas);
         void treinamento( vector<float> entradas, float saida_esperada, float taxa_aprendizado);
 
     protected:
@@ -41,7 +41,7 @@ Perceptron::Perceptron()
 {
 }
 
-Perceptron::Perceptron( int quant_entradas, string tipo_saida)
+Perceptron::Perceptron(int quant_entradas, const string &tipo_saida)
 {
     this->quant_entradas = quant_entradas;
     this->tipo_saida = tipo_saida;
@@ -85,12 +85,12 @@ float Perceptron::ativacao_sigm( float somatorio)
 float Perceptron::ativacao_relu( float somatorio)
 {
     if ( somatorio <= 0)
-        return 0;
+        return -1;
     return 1;
 }
 
 //Saida do neuronio relu
-float Perceptron::saida( vector<float> entradas)
+float Perceptron::saida(const vector<float> &entradas)
 {
     if ( this->tipo_saida == SAIDA_SIGMOID)
         return this->ativacao_sigm(this->somatorio(entradas));
@@ -101,7 +101,7 @@ float Perceptron::saida( vector<float> entradas)
 //Função de treinamento do perceptron
 void Perceptron::treinamento( vector<float> entradas, float saida_esperada, float taxa_aprendizado)
 {
-    float saida_prevista = this->saida( entradas);
+    float saida_prevista = this->saida(entradas);
     if (float delta = saida_esperada - saida_prevista)
     {
         this->peso_bias += taxa_aprendizado*delta;

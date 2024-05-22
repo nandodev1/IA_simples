@@ -71,7 +71,7 @@ Camada::Camada( int quant_entradas, int quant_saidas)
 };
 
 
-vector<float> Camada::saida(vector<float> entradas)
+vector<float> Camada::saida(const vector<float> &entradas)
 {
     for( int i = 0; i < this->neuronios.size(); i++)
     {
