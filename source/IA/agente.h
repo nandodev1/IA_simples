@@ -72,7 +72,7 @@ void Agente::procSaida()
 	float dir4 = this->rede->saida({this->x,this->y, 1, 1})[3];
 	
 
-	this->mover(dir + dir2 + dir3 + dir4);
+	this->mover(2);
 }
 
 void Agente::update()

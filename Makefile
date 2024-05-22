@@ -1,5 +1,5 @@
 MAIN=./source/base/main.cpp
-MAIN_TESTE=./source/IA/main_teste.cpp
+MAIN_TESTE=./source/base/main_teste.cpp
 LIB_DEP=/lib/x86_64-linux-gnu/libglut.so /lib/x86_64-linux-gnu/libGL.so
 OUT_DIR=./bin
 CPP=/usr/bin/g++
