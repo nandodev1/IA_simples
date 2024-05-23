@@ -20,7 +20,7 @@ class Camada
 
         vector<Perceptron> neuronios;
         Camada( int quant_entradas, int quant_saidas);
-        vector<float> saida(vector<float> entradas);
+        vector<float> saida(const vector<float> &entradas);
         void set_pesos( vector<float> entradas);
         vector<float> get_pesos();
         ~Camada();
@@ -57,7 +57,7 @@ void Camada::set_pesos( vector<float> entradas)
         }
     }
 }
-
+//cria uma camada da rede
 Camada::Camada( int quant_entradas, int quant_saidas)
 {
     for ( int i = 0; i < quant_entradas;i++)

@@ -66,13 +66,20 @@ vector<float> Agente::getPosition()
 
 void Agente::procSaida()
 {
-	float dir = this->rede->saida({this->x,this->y, 1, 1})[0];
-	float dir2 = this->rede->saida({this->x,this->y, 1, 1})[1];
-	float dir3 = this->rede->saida({this->x,this->y, 1, 1})[2];
-	float dir4 = this->rede->saida({this->x,this->y, 1, 1})[3];
+	vector<float> out = this->rede->saida({this->x,this->y});
+	float dir1 = out[0];
+	float dir2 = out[1];
+	float dir3 = out[2];
+	float dir4 = out[2];
 	
-
-	this->mover(2);
+	if(dir1 > 0)
+		this->mover(CIMA);
+	if(dir2 > 0)
+		this->mover(BAIXO);
+	if(dir3 > 0)
+		this->mover(ESQUERDA);
+	if(dir4 > 0)
+		this->mover(DIREITA);
 }
 
 void Agente::update()

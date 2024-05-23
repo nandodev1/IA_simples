@@ -1,6 +1,7 @@
 #include<iostream>
 
 #include "../IA/base/Perceptron.h"
+#include "../IA/base/Camada.h"
 #include <vector>
 
 using namespace std;
@@ -10,6 +11,7 @@ int main( int argc, char * argv [])
 	vector<float> input = {1, 1, -1};
 	
 	Perceptron perceptron = Perceptron(2, SAIDA_RELU);
+	Camada camada1 = Camada(2, 1);
 	
 	vector<float> dados_treinamento = {-1, -1, -1};
 	vector<float> dados_treinamento2 = {-1, -1, 1};
