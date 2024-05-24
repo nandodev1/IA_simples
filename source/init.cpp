@@ -20,10 +20,10 @@ void loop()
     
 	if(i<150)
 	{
-		Agente ag = Agente(rand()%1300, rand()%1000);
+		Agente ag = Agente(rand()%1300, rand()%910);
 		ag.setColor({rand()%249, rand()%249, rand()%249});
+		ag.setLimits({1285, 910});
 		agentes.push_back(ag);
-		
 	}
 	i++;
     ag1->update();

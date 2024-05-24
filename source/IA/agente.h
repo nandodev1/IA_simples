@@ -9,6 +9,9 @@
 #define ESQUERDA 2
 #define DIREITA 3
 
+#define X_LIMIT 0
+#define Y_LIMIT 1
+
 using namespace std;
 
 class Agente
@@ -16,6 +19,7 @@ class Agente
 	private:
 		float x;
 		float y;
+		vector<float> limits = {99999, 99999};
 		vector<float> color = {0, 0, 0};
 		Camada * camada1;
 		Camada * camada2;
@@ -30,18 +34,25 @@ class Agente
 		void draw();
 		void setColor(vector<int>);
 		float speed;
+		void setLimits(vector<float>);
 };
+
+void Agente::setLimits(vector<float> limites)
+{
+	this->limits[X_LIMIT] = limites[X_LIMIT];
+	this->limits[Y_LIMIT] = limites[Y_LIMIT];
+}
 
 void Agente::mover( uint8_t direcao)
 {
-	if(direcao == CIMA)
+	if(direcao == CIMA && this->y < limits[Y_LIMIT])
 		this->y += this->speed;
-	if(direcao == BAIXO)
+	if(direcao == BAIXO && this->y > 20)
 		this->y -= this->speed;
-	if(direcao == ESQUERDA)
-		this->x += this->speed;
-	if(direcao == DIREITA)
+	if(direcao == ESQUERDA && this->x > 0)
 		this->x -= this->speed;
+	if(direcao == DIREITA && this->x < limits[X_LIMIT])
+		this->x += this->speed;
 }
 
 //seleciona cor do agente
