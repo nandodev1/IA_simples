@@ -1,5 +1,6 @@
 #include "./IA/agente.h"
 #include "./IA/sensor.h"
+#include "./layout/layout.h"
 
 void setup()
 {
@@ -17,8 +18,12 @@ int i = 0;
 
 vector<float> pos_ag1;
 
+Layout map = Layout("./source/layout/base.lay");
+
+
 void loop()
 {    
+	map.update();
 	ag1->update();
 	pos_ag1 = ag1->getPosition();
 	
