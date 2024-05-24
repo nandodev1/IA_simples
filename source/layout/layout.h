@@ -12,6 +12,7 @@ class Layout
 		Layout(string);
 		string loadLayout(string);
 		void update(void);
+		bool isOpen(float x, float y);
 };
 
 #include "layout.cpp"

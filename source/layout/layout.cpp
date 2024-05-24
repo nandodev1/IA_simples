@@ -9,6 +9,10 @@ Layout::Layout(string path)
 	this->map = this->loadLayout(path);
 }
 
+bool Layout::isOpen(float x, float y)
+{
+}
+
 void Layout::update(void)
 {
 	int y = 0;
@@ -18,7 +22,7 @@ void Layout::update(void)
 	{
 		if(this->map[i] == '#')
 			{
-				retangulo(100 + (x*20), 900 + (y * 26), 20, 20,{ 0, 0, 255});
+				retangulo((x*20), 910 + (y * 26), 20, 20,{ 0, 0, 255});
 				x++;
 			}
 		else if(this->map[i] == '\n')
