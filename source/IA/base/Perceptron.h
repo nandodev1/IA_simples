@@ -46,7 +46,6 @@ Perceptron::Perceptron(int quant_entradas, const string &tipo_saida)
     this->quant_entradas = quant_entradas;
     this->tipo_saida = tipo_saida;
     this->bias = 1;
-    srand(time(0)); //garante valores aleatórios a cada execução do programa.
     //Preenche pesos com valores aleatórios
     this->peso_bias = this->random();
     for( int i = 0; i < this->quant_entradas; i++)
@@ -57,7 +56,7 @@ Perceptron::Perceptron(int quant_entradas, const string &tipo_saida)
 //retorna um valor aleatório entre 0 -1
 float Perceptron::random()
 {
-    float random = (float)(rand()%10000) / 10000;
+    float random = (int)(rand()%1000);
     if( rand() % 2)
         return random;
     return random * -1;

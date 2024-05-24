@@ -3,6 +3,7 @@
 
 #include<iostream>
 #include<vector>
+#include<string>
 
 #include "Perceptron.h"
 
@@ -19,7 +20,7 @@ class Camada
     public:
 
         vector<Perceptron> neuronios;
-        Camada( int quant_entradas, int quant_saidas);
+        Camada( int quant_entradas, int quant_saidas, string tipo_saida);
         vector<float> saida(const vector<float> &entradas);
         void set_pesos( vector<float> entradas);
         vector<float> get_pesos();
@@ -58,14 +59,14 @@ void Camada::set_pesos( vector<float> entradas)
     }
 }
 //cria uma camada da rede
-Camada::Camada( int quant_entradas, int quant_saidas)
+Camada::Camada( int quant_entradas, int quant_saidas, string tipo_saida)
 {
     for ( int i = 0; i < quant_entradas;i++)
         this->entradas.push_back(0);
 
     for ( int i = 0; i < quant_saidas; i++)
     {
-        this->neuronios.push_back( Perceptron( quant_entradas, SAIDA_RELU));
+        this->neuronios.push_back( Perceptron( quant_entradas, tipo_saida));
         this->saidas.push_back(0);
     }   
 };
