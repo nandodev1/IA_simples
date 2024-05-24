@@ -33,7 +33,7 @@ void loop()
 	s1->update();
 	
     //adiciona agente
-    /*
+    
 	if(i<150)
 	{
 		Agente ag = Agente(rand()%1300, rand()%910);
@@ -47,5 +47,5 @@ void loop()
 	for(int i = 0; i < agentes.size(); i++)
 	{
 		agentes[i].update();
-	}*/
+	}
 }
