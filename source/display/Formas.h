@@ -1,3 +1,6 @@
+#ifndef FORMAS_H
+#define FORMAS_H
+
 #include <vector>
 #include <math.h>
 
@@ -32,3 +35,5 @@ void circulo()
         glEnd();
     glPopMatrix();
 }
+
+#endif

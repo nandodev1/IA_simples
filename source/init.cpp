@@ -1,6 +1,7 @@
 #include "./IA/agente.h"
 #include "./IA/sensor.h"
 #include "./layout/layout.h"
+#include "./layout/obstaculos.h"
 
 void setup()
 {
@@ -34,7 +35,7 @@ void loop()
 	
     //adiciona agente
     
-	if(i<150)
+	if(i<120)
 	{
 		Agente ag = Agente(rand()%1300, rand()%910);
 		ag.setColor({rand()%249, rand()%249, rand()%249});
