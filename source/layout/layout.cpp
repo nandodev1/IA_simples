@@ -19,7 +19,8 @@ void Layout::update(void)
 	{
 		if(this->map[i] == '#')
 			{
-				retangulo((x*10), 910 + (y * 10), 10, 10,{ 125, 125, 125});
+				// TAMANHO_TELA_Y variavel global modificada pela classe framework
+				retangulo((x*10), TAMANHO_TELA_Y + (y * 10), 10, 10,{ 125, 125, 125});
 				x++;
 			}
 		else if(this->map[i] == '\n')

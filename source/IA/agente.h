@@ -17,7 +17,9 @@ using namespace std;
 
 class Agente
 {
-	private:
+private:
+		float xBack;
+		float yBack;
 		float x;
 		float y;
 		vector<float> limits = {99999, 99999};
@@ -27,6 +29,7 @@ class Agente
 		void mover( uint8_t direcao);
 		vector<float> rede(const vector<float> &input); 
 		void procSaida();
+		void posBack(void);
 		
 	public:
 		vector<float> getPosition();
@@ -38,6 +41,13 @@ class Agente
 		void setLimits(vector<float>);
 };
 
+
+void Agente::posBack(void)
+{
+	this->x = 500;
+	this->y = 600;
+}
+
 void Agente::setLimits(vector<float> limites)
 {
 	this->limits[X_LIMIT] = limites[X_LIMIT];
@@ -46,6 +56,9 @@ void Agente::setLimits(vector<float> limites)
 
 void Agente::mover( uint8_t direcao)
 {
+	this->xBack = x;
+	this->yBack = y;
+	
 	if(direcao == CIMA && this->y < limits[Y_LIMIT])
 		this->y += this->speed;
 	if(direcao == BAIXO && this->y > 20)
@@ -66,7 +79,7 @@ void Agente::setColor(vector<int> color)
 
 Agente::Agente( float x, float y)
 {
-	this->speed = 0.1;
+	this->speed = 3;
 	
 	this->camada1 = new Camada(2, 2, SAIDA_SIGMOID);
 	this->camada2 = new Camada(2, 4, SAIDA_RELU);
@@ -122,14 +135,15 @@ void Agente::update()
 {
 	this->procSaida();
 	this->draw();
-	Paredes paredes = Paredes("./source/layout/base.lay", 10, 10, 130, 91);
-	char ch = paredes.getCharacterMap( (int)this->x, (int)this->y);
+	Paredes paredes = Paredes("./source/layout/base.lay", 10, 10, 130, 70);
+	char ch;
+	ch = paredes.getCharacterMap(this->x, this->y);
 	if(ch == '#')
 	{
-		this->x = 500;
-		this->y = 500;
+		this->posBack();
 	}
 }
+
 void Agente::draw()
 {
     retangulo(this->x, this->y, 15.0, 15.0,{this->color[0], this->color[1], this->color[2]});
