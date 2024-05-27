@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "./base/Camada.h"
+#include "../layout/obstaculos.h"
 
 #define CIMA 0
 #define BAIXO 1
@@ -121,6 +122,13 @@ void Agente::update()
 {
 	this->procSaida();
 	this->draw();
+	Paredes paredes = Paredes("./source/layout/base.lay", 10, 10, 130, 91);
+	char ch = paredes.getCharacterMap( (int)this->x, (int)this->y);
+	if(ch == '#')
+	{
+		this->x = 500;
+		this->y = 500;
+	}
 }
 void Agente::draw()
 {
