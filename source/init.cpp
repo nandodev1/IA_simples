@@ -5,7 +5,7 @@
 
 void setup()
 {
-
+	
 }
 
 
@@ -19,11 +19,11 @@ int i = 0;
 
 vector<float> pos_ag1;
 
-Layout map = Layout("./source/layout/base.lay");
+Layout map = Layout("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay");
 
 
 void loop()
-{    
+{   
 	map.update();
 	ag1->update();
 	pos_ag1 = ag1->getPosition();

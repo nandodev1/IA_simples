@@ -3,6 +3,7 @@
 #include "../IA/base/Camada.h"
 #include "../display/Framework.h"
 
+static string pathLayout = "";
 
 void testes_redes();
 void testes_framework(int * argc, char * argv[]);
@@ -11,9 +12,14 @@ using namespace std;
 
 int main( int argc, char * argv[])
 {
+    pathLayout = argv[1];
     testes_framework( &argc, argv);
 }
 
+void initLayout(void)
+{
+    
+}
 
 void testes_framework(int * argc, char * argv[])
 {
