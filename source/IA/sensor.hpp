@@ -50,12 +50,12 @@ float Sensor::calcDist()
 		b = this->x_init - this->x;
 
 	if(this->y > this->y_init)
-		b = this->y - this->y_init;
+		c = this->y - this->y_init;
 	else
-		b = this->y_init - this->y;
+		c = this->y_init - this->y;
 
 	a = sqrt(b * b + c * c);
-	return a * 10.0;//this->paredes.getDimX();//Mais ganbiarra
+	return a;//this->paredes.getDimX();//Mais ganbiarra
 }
 
 Sensor::Sensor(float x, float y, float x_parent, float y_parent, float angle)
@@ -92,7 +92,7 @@ void Sensor::update(void)
 			dist = this->calcDist();
 			//retangulo(this->x, this->y, 5.0, 5.0,{this->color[0], this->color[1], this->color[2]});
 			//* 2 ganbiarra braba
-			if(dist > 40.0)
+			if(dist > 60.)
 				line(this->x*2, this->y*2, this->x_init*2, this->y_init*2);
 			this->x = this->x_init;
 			this->y = this->y_init;
