@@ -31,7 +31,7 @@ private:
 		vector<float> rede(const vector<float> &input); 
 		void procSaida();
 		void posBack(void);
-		Sensor * s1;
+		vector<Sensor> sensores;
 		
 	public:
 		vector<float> getPosition();
@@ -81,14 +81,15 @@ void Agente::setColor(vector<int> color)
 
 Agente::Agente( float x, float y)
 {
-	this->speed = 1;
+	this->speed = 0.1;
 	
-	this->camada1 = new Camada(2, 2, SAIDA_SIGMOID);
+	this->camada1 = new Camada(100, 2, SAIDA_SIGMOID);
 	this->camada2 = new Camada(2, 4, SAIDA_RELU);
 	
 	this->x = x;
-	this->y = y; 
-	this->s1 = new Sensor(x, y + 10, x, y, 1);
+	this->y = y;
+	for(int i = 0; i < 100; i++)
+		this->sensores.push_back(Sensor(x, y, x, y, i));
 }
 
 vector<float> Agente::getPosition()
@@ -136,8 +137,11 @@ void Agente::procSaida()
 
 void Agente::update()
 {
-	this->s1->update();
-	this->s1->setInitPosition(this->x, this->y);
+	for(int i = 0; i < this->sensores.size(); i++)
+	{
+		sensores[i].update();
+		sensores[i].setInitPosition(this->x, this->y);
+	}
 	this->procSaida();
 	this->draw();
 }
