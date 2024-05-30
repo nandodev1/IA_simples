@@ -48,4 +48,14 @@ void circulo(float x, float y, float raio, vector<float> cor)
     glPopMatrix();
 }
 
+void line(float x1, float y1, float x2, float y2){
+    glPushMatrix();
+        glColor3f (0.0, 0.0, 0.0);
+        //glTranslatef(100/TAMANHO_TELA_X*2, 200/TAMANHO_TELA_Y*2, 0);
+        glBegin(GL_LINES);
+            glVertex2f(x1/TAMANHO_TELA_X, y1/TAMANHO_TELA_Y);
+            glVertex2f(x2/TAMANHO_TELA_X, y2/TAMANHO_TELA_Y);
+        glEnd();
+    glPopMatrix();
+}
 #endif

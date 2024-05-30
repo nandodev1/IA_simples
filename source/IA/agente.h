@@ -4,6 +4,7 @@
 #include <vector>
 #include "./base/Camada.h"
 #include "../layout/obstaculos.h"
+#include "../IA/sensor.hpp"
 
 #define CIMA 0
 #define BAIXO 1
@@ -30,6 +31,7 @@ private:
 		vector<float> rede(const vector<float> &input); 
 		void procSaida();
 		void posBack(void);
+		Sensor * s1;
 		
 	public:
 		vector<float> getPosition();
@@ -79,13 +81,14 @@ void Agente::setColor(vector<int> color)
 
 Agente::Agente( float x, float y)
 {
-	this->speed = 3;
+	this->speed = 1;
 	
 	this->camada1 = new Camada(2, 2, SAIDA_SIGMOID);
 	this->camada2 = new Camada(2, 4, SAIDA_RELU);
 	
 	this->x = x;
-	this->y = y;
+	this->y = y; 
+	this->s1 = new Sensor(x, y + 10, x, y, 1);
 }
 
 vector<float> Agente::getPosition()
@@ -133,15 +136,10 @@ void Agente::procSaida()
 
 void Agente::update()
 {
+	this->s1->update();
+	this->s1->setInitPosition(this->x, this->y);
 	this->procSaida();
 	this->draw();
-	Paredes paredes = Paredes("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay", 10, 10, 130, 70);
-	char ch;
-	ch = paredes.getCharacterMap(this->x, this->y);
-	if(ch == '#')
-	{
-		this->posBack();
-	}
 }
 
 void Agente::draw()

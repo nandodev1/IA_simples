@@ -1,5 +1,5 @@
 #include "./IA/agente.h"
-#include "./IA/sensor.h"
+#include "./IA/sensor.hpp"
 #include "./layout/layout.h"
 #include "./layout/obstaculos.h"
 
@@ -12,8 +12,6 @@ void setup()
 vector<Agente> agentes;
 
 Agente * ag1 = new Agente(400, 200);
-
-Sensor * s1 = new Sensor( 400, 400);
 
 int i = 0;
 
@@ -28,14 +26,9 @@ void loop()
 	ag1->update();
 	pos_ag1 = ag1->getPosition();
 	
-	s1->x = pos_ag1[0] + 30;
-	s1->y = pos_ag1[1] + 30;
-	
-	s1->update();
-	
     //adiciona agente
     
-	if(i<120)
+	if(i<50)
 	{
 		Agente ag = Agente(rand()%1300, rand()%910);
 		ag.setColor({rand()%249, rand()%249, rand()%249});

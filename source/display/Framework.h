@@ -21,11 +21,20 @@ class Framework
     private:
         int largura;
         int altura;
+        void keyboard(unsigned char key, int x, int y);
     public:
         Framework(string titulo, int largura, int altura, int * argc, char * argv[]);
         ~Framework();
         void inicializa();
 };
+
+void Framework::keyboard(unsigned char key, int x, int y){
+  switch (key) {
+  case 27:
+	exit(0);
+	break;
+  }
+}
 
 Framework::Framework(string titulo, int largura, int altura, int * argc, char * argv[])
 {
@@ -40,6 +49,7 @@ Framework::Framework(string titulo, int largura, int altura, int * argc, char * 
     inicializa();
     glutDisplayFunc( desenha) ;
     glutIdleFunc(redesenha);
+    //glutKeyboardFunc(this->keyboard);
     setup();
     // glutFullScreen();
     glutMainLoop();
