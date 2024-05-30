@@ -8,7 +8,6 @@ LIB=./source/
 all: copilar executar
 
 copilar: ${MAIN}
-	# Control will enter here if $DIRECTORY doesn't exist.
 	if [ ! -d ${OUT_DIR} ]; then mkdir ${OUT_DIR};fi
 	${CPP} ${MAIN} -I ${LIB} -lm ${LIB_DEP} -o ${OUT_DIR}/main -g
 

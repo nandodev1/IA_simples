@@ -135,7 +135,7 @@ void Agente::update()
 {
 	this->procSaida();
 	this->draw();
-	Paredes paredes = Paredes("./source/layout/base.lay", 10, 10, 130, 70);
+	Paredes paredes = Paredes("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay", 10, 10, 130, 70);
 	char ch;
 	ch = paredes.getCharacterMap(this->x, this->y);
 	if(ch == '#')
@@ -146,7 +146,8 @@ void Agente::update()
 
 void Agente::draw()
 {
-    retangulo(this->x, this->y, 15.0, 15.0,{this->color[0], this->color[1], this->color[2]});
+    //retangulo(this->x, this->y, 15.0, 15.0,{this->color[0], this->color[1], this->color[2]});
+    circulo(this->x, this->y, 15.0,{this->color[0], this->color[1], this->color[2]});
 }
 
 #endif
