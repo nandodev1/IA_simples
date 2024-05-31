@@ -21,7 +21,20 @@ class Paredes
 		char getCharacter(int x, int y);
 		char getCharacterMap(int x, int y);
 		float getDimX(void);
+		void setCharacterMap(int, int, char);
+		string getMap(void);
 };
+
+string Paredes::getMap(void)
+{
+	return this->map;
+}
+
+void Paredes::setCharacterMap(int x, int y, char ch)
+{
+	y = this->dimYmap - 1 - y;
+	this->map[x + (y * this->dimXmap) + y] = ch;
+}
 
 float Paredes::getDimX(void)
 {
