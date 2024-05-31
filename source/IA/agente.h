@@ -218,6 +218,7 @@ void Agente::update()
 	this->procSaida();
 	this->isScore();
 	this->draw();
+	cout << this->score << endl;
 }
 
 void Agente::draw()

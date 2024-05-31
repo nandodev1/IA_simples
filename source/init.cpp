@@ -24,7 +24,7 @@ void loop()
 	
     //adiciona agente
     
-	if(i<200)
+	if(i<1)
 	{
 		Agente ag = Agente(rand()%1200, rand()%900);
 		ag.setColor({rand()%249, rand()%249, rand()%249});
