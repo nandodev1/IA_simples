@@ -19,6 +19,7 @@ using namespace std;
 class Agente
 {
 private:
+		Paredes * paredes = new Paredes("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay", 10, 10, 130, 70);
 		float xBack;
 		float yBack;
 		float x;
@@ -27,6 +28,7 @@ private:
 		vector<float> color = {0, 0, 0};
 		Camada * camada1;
 		Camada * camada1_2;
+		Camada * camada2_3;
 		Camada * camada2;
 		void mover( uint8_t direcao);
 		vector<float> rede(const vector<float> &input); 
@@ -34,6 +36,10 @@ private:
 		void posBack(void);
 		vector<Sensor> sensores;
 		vector<float> sensorToFloat();
+		int score;
+		//variavél responsavél por armazenar slots já visitados.
+		string caminho;
+		void copyMap(void);
 		
 	public:
 		vector<float> getPosition();
@@ -43,8 +49,50 @@ private:
 		void setColor(vector<int>);
 		float speed;
 		void setLimits(vector<float>);
+		int getScore(void);
+		bool isScore(void);
 };
 
+void Agente::copyMap(void)
+{
+	string map = paredes->getMap();
+	for(int i = 0; i < map.size(); i++)
+	{
+		char ch = map[i];
+		if(ch != '\n')
+			this->caminho += ch;
+	}
+}
+
+bool Agente::isScore(void)
+{
+	char ch = this->paredes->getCharacterMap(this->x, this->y);
+	int x_largura = this->paredes->getDimX();
+	int dimXObj = this->paredes->getDimX();
+
+
+	int posX =  (((int)this->x) % dimXObj);
+	int posY = (((int)this->y) % dimXObj);
+
+	if(ch == ' ')
+	{
+		int posYtmp = posY  * x_largura;
+
+		char chMap = caminho[posX + posY];
+		if(chMap != '.')
+		{
+			this->score++;
+			caminho[posX + posY] = '.';
+			return true;
+		}
+	}
+	return false;
+}
+
+int Agente::getScore(void)
+{
+	return this->score;
+}
 
 void Agente::posBack(void)
 {
@@ -83,16 +131,25 @@ void Agente::setColor(vector<int> color)
 
 Agente::Agente( float x, float y)
 {
-	this->speed = 4;
+
+	caminho = "";
+	this->copyMap();
+
+	this->speed = 0.1;
 	
-	this->camada1 = new Camada(100, 5, SAIDA_SIGMOID);
+	this->camada1 = new Camada(10, 5, SAIDA_SIGMOID);
 	this->camada1_2 = new Camada(5, 7, SAIDA_SIGMOID);
+	this->camada2_3 = new Camada(7, 7, SAIDA_SIGMOID);
 	this->camada2 = new Camada(7, 4, SAIDA_RELU);
 	
 	this->x = x;
 	this->y = y;
-	for(int i = 0; i < 100; i++)
+	for(int i = 0; i < 100;)
+	{
 		this->sensores.push_back(Sensor(x, y, x, y, i));
+		i += 10;
+	}
+	this->score = 0;
 }
 
 vector<float> Agente::getPosition()
@@ -116,7 +173,8 @@ vector<float> Agente::rede(const vector<float> &input)
 {
 	vector<float> out_camada1 = this->camada1->saida(input);
 	vector<float> out_camada1_2 = this->camada1->saida(out_camada1);
-	vector<float> out = this->camada2->saida(out_camada1_2);
+	vector<float> out_camada2_3 = this->camada1->saida(out_camada1_2);
+	vector<float> out = this->camada2->saida(out_camada2_3);
 	return out;
 }
 
@@ -158,13 +216,14 @@ void Agente::update()
 		sensores[i].setInitPosition(this->x, this->y);
 	}
 	this->procSaida();
+	this->isScore();
 	this->draw();
 }
 
 void Agente::draw()
 {
     //retangulo(this->x, this->y, 15.0, 15.0,{this->color[0], this->color[1], this->color[2]});
-    circulo(this->x, this->y, 60.0,{this->color[0], this->color[1], this->color[2]});
+    circulo(this->x, this->y, 10.0,{this->color[0], this->color[1], this->color[2]});
     //ponto(this->x, this->y, {this->color[0], this->color[1], this->color[2]});
 }
 
