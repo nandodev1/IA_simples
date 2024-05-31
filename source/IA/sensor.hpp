@@ -93,7 +93,7 @@ void Sensor::update(void)
 			//retangulo(this->x, this->y, 5.0, 5.0,{this->color[0], this->color[1], this->color[2]});
 			//* 2 ganbiarra braba
 			if(dist > 40.)
-				//line(this->x*2, this->y*2, this->x_init*2, this->y_init*2);
+				line(this->x*2, this->y*2, this->x_init*2, this->y_init*2);
 			this->x = this->x_init;
 			this->y = this->y_init;
  			break;

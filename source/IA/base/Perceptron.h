@@ -9,6 +9,7 @@
 #include <vector>
 
 #define SAIDA_RELU  "relu"
+#define SAIDA_RELU_POSITIVA  "relu_positiva"
 #define SAIDA_SIGMOID  "sigmoid"
 
 using namespace std;
@@ -30,6 +31,7 @@ class Perceptron
         float somatorio(vector<float> entradas);
         float ativacao_sigm( float somatorio);
         float ativacao_relu( float somatorio);
+        float ativacao_relu_positiva( float somatorio);
         float saida(const vector<float> &entradas);
         void treinamento( vector<float> entradas, float saida_esperada, float taxa_aprendizado);
 
@@ -63,7 +65,7 @@ float Perceptron::random()
 }
 
 //Recepe as entradas do perceptron e devolve o somatorio dos produtos
-float Perceptron::somatorio( vector<float> entradas)
+float Perceptron::somatorio(vector<float> entradas)
 {
     float produtos = 0;
     for ( int i = 0; i < this->quant_entradas; i++)
@@ -75,17 +77,26 @@ float Perceptron::somatorio( vector<float> entradas)
 }
 
 //Implementação função sigmóid para classificadores
-float Perceptron::ativacao_sigm( float somatorio)
+float Perceptron::ativacao_sigm(float somatorio)
 {
     return 1/(1 + exp(-somatorio));
 }
 
 //uso da funcao relu como ativacao
-float Perceptron::ativacao_relu( float somatorio)
+float Perceptron::ativacao_relu(float somatorio)
 {
     if ( somatorio <= 0)
         return -1;
     return 1;
+}
+
+//uso da funcao relu como ativacao positiva apenas valores positivos
+//maiores que -1 são repassados para entrada.
+float Perceptron::ativacao_relu_positiva( float somatorio)
+{
+    if ( somatorio < 0)
+        return 0;
+    return somatorio;
 }
 
 //Saida do neuronio relu
@@ -93,8 +104,14 @@ float Perceptron::saida(const vector<float> &entradas)
 {
     if ( this->tipo_saida == SAIDA_SIGMOID)
         return this->ativacao_sigm(this->somatorio(entradas));
+    else if (this->tipo_saida == SAIDA_RELU)
+    {
+        return this->ativacao_relu_positiva(this->somatorio(entradas));
+    }
     else
+    {
         return this->ativacao_relu(this->somatorio(entradas));
+    }
 }
 
 //Função de treinamento do perceptron

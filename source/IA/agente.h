@@ -25,11 +25,7 @@ private:
 		float x;
 		float y;
 		vector<float> limits = {99999, 99999};
-		vector<float> color = {0, 0, 0};
-		Camada * camada1;
-		Camada * camada1_2;
-		Camada * camada2_3;
-		Camada * camada2;
+		vector<int> color = {0, 0, 0};
 		void mover( uint8_t direcao);
 		vector<float> rede(const vector<float> &input); 
 		void procSaida();
@@ -40,6 +36,7 @@ private:
 		//variavél responsavél por armazenar slots já visitados.
 		string caminho;
 		void copyMap(void);
+		int updata;
 		
 	public:
 		vector<float> getPosition();
@@ -50,8 +47,37 @@ private:
 		float speed;
 		void setLimits(vector<float>);
 		int getScore(void);
+		void setScore(int);
 		bool isScore(void);
+		Camada * camada1;
+		Camada * camada1_2;
+		Camada * camada2_3;
+		Camada * camada2;
+		vector<int> getColor(void);
+		int getUpdat(void);
+		void setUpdat(int);
 };
+
+
+void Agente::setUpdat(int valor)
+{
+	this->updata = valor;
+}
+
+int Agente::getUpdat(void)
+{
+	return this->updata;
+}
+
+vector<int> Agente::getColor(void)
+{
+	return this->color;
+}
+
+void Agente::setScore(int score)
+{
+	this->score = score;
+}
 
 void Agente::copyMap(void)
 {
@@ -81,7 +107,7 @@ bool Agente::isScore(void)
 		char chMap = caminho[posX + posY];
 		if(chMap != '.')
 		{
-			this->score++;
+			this->score += 10;
 			caminho[posX + posY] = '.';
 			return true;
 		}
@@ -131,16 +157,17 @@ void Agente::setColor(vector<int> color)
 
 Agente::Agente( float x, float y)
 {
-
+	this->updata = 0;
+	this->score +=5;
 	caminho = "";
 	this->copyMap();
 
-	this->speed = 0.1;
+	this->speed = 1;
 	
-	this->camada1 = new Camada(10, 5, SAIDA_SIGMOID);
-	this->camada1_2 = new Camada(5, 7, SAIDA_SIGMOID);
-	this->camada2_3 = new Camada(7, 7, SAIDA_SIGMOID);
-	this->camada2 = new Camada(7, 4, SAIDA_RELU);
+	this->camada1 = new Camada(10, 4, SAIDA_RELU_POSITIVA);
+	this->camada1_2 = new Camada(4, 5, SAIDA_RELU_POSITIVA);
+	this->camada2_3 = new Camada(5, 4, SAIDA_RELU_POSITIVA);
+	this->camada2 = new Camada(5, 4, SAIDA_RELU);
 	
 	this->x = x;
 	this->y = y;
@@ -174,7 +201,7 @@ vector<float> Agente::rede(const vector<float> &input)
 	vector<float> out_camada1 = this->camada1->saida(input);
 	vector<float> out_camada1_2 = this->camada1->saida(out_camada1);
 	vector<float> out_camada2_3 = this->camada1->saida(out_camada1_2);
-	vector<float> out = this->camada2->saida(out_camada2_3);
+	vector<float> out = this->camada2->saida(out_camada1);
 	return out;
 }
 
@@ -210,6 +237,8 @@ void Agente::procSaida()
 
 void Agente::update()
 {
+	this->updata++;
+	this->score += 4;
 	for(int i = 0; i < this->sensores.size(); i++)
 	{
 		sensores[i].update();
@@ -218,13 +247,12 @@ void Agente::update()
 	this->procSaida();
 	this->isScore();
 	this->draw();
-	cout << this->score << endl;
 }
 
 void Agente::draw()
 {
     //retangulo(this->x, this->y, 15.0, 15.0,{this->color[0], this->color[1], this->color[2]});
-    circulo(this->x, this->y, 10.0,{this->color[0], this->color[1], this->color[2]});
+    circulo(this->x, this->y, 10.0,{(float)this->color[0], (float)this->color[1], (float)this->color[2]});
     //ponto(this->x, this->y, {this->color[0], this->color[1], this->color[2]});
 }
 

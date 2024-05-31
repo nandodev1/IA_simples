@@ -51,7 +51,7 @@ void Camada::set_pesos( vector<float> entradas)
     int i = 0;
     for( int i_neuronio = 0; i_neuronio < this->neuronios.size(); i_neuronio++)
     {
-        this->neuronios[i_neuronio].peso_bias = entradas[i++];
+        this->neuronios[i_neuronio].peso_bias = entradas[i];
         for ( int i_pesos = 0; i_pesos < quant_entradas; i_pesos++)
         {
             this->neuronios[i_neuronio].pesos[i_pesos] = entradas[ i++];
