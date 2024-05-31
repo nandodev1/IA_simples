@@ -14,7 +14,7 @@ vector<Agente> agentes;
 int i = 0;
 
 Layout map = Layout("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay");
-
+Paredes wall = Paredes("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay", 10, 10, 130, 70);
 
 void loop()
 {   
@@ -24,11 +24,11 @@ void loop()
 	
     //adiciona agente
     
-	if(i<10)
+	if(i<1)
 	{
 		Agente ag = Agente(rand()%1200, rand()%900);
 		ag.setColor({rand()%249, rand()%249, rand()%249});
-		ag.setLimits({1285, 910});
+		ag.setLimits({1300, 1300});
 		agentes.push_back(ag);
 		i++;
 	}
@@ -37,5 +37,15 @@ void loop()
 	for(int i = 0; i < agentes.size(); i++)
 	{
 		agentes[i].update();
+	}
+	for(int j = 0; j < agentes.size(); j++)
+	{
+		char ch = wall.getCharacterMap(agentes[j].getPosition()[0], agentes[j].getPosition()[1]);
+		if(ch == '#')
+		{
+			agentes.erase(agentes.begin() + j);
+			i--;
+		}
+		
 	}
 }

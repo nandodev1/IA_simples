@@ -26,12 +26,14 @@ private:
 		vector<float> limits = {99999, 99999};
 		vector<float> color = {0, 0, 0};
 		Camada * camada1;
+		Camada * camada1_2;
 		Camada * camada2;
 		void mover( uint8_t direcao);
 		vector<float> rede(const vector<float> &input); 
 		void procSaida();
 		void posBack(void);
 		vector<Sensor> sensores;
+		vector<float> sensorToFloat();
 		
 	public:
 		vector<float> getPosition();
@@ -81,10 +83,11 @@ void Agente::setColor(vector<int> color)
 
 Agente::Agente( float x, float y)
 {
-	this->speed = 0.1;
+	this->speed = 4;
 	
-	this->camada1 = new Camada(100, 2, SAIDA_SIGMOID);
-	this->camada2 = new Camada(2, 4, SAIDA_RELU);
+	this->camada1 = new Camada(100, 5, SAIDA_SIGMOID);
+	this->camada1_2 = new Camada(5, 7, SAIDA_SIGMOID);
+	this->camada2 = new Camada(7, 4, SAIDA_RELU);
 	
 	this->x = x;
 	this->y = y;
@@ -112,13 +115,25 @@ vector<float> Agente::getPosition()
 vector<float> Agente::rede(const vector<float> &input)
 {
 	vector<float> out_camada1 = this->camada1->saida(input);
-	vector<float> out = this->camada2->saida(out_camada1);
+	vector<float> out_camada1_2 = this->camada1->saida(out_camada1);
+	vector<float> out = this->camada2->saida(out_camada1_2);
 	return out;
+}
+
+vector<float> Agente::sensorToFloat()
+{
+	vector<float> tmp;
+	for(int i = 0; i < this->sensores.size(); i++)
+	{
+		tmp.push_back(sensores[i].calcDist());
+	}
+	return tmp;
 }
 
 void Agente::procSaida()
 {
-	vector<float> out = this->rede({this->x,this->y});
+
+	vector<float> out = this->rede(this->sensorToFloat());
 	
 	float dir4 = out[0];
 	float dir2 = out[1];
@@ -149,7 +164,8 @@ void Agente::update()
 void Agente::draw()
 {
     //retangulo(this->x, this->y, 15.0, 15.0,{this->color[0], this->color[1], this->color[2]});
-    circulo(this->x, this->y, 15.0,{this->color[0], this->color[1], this->color[2]});
+    circulo(this->x, this->y, 60.0,{this->color[0], this->color[1], this->color[2]});
+    //ponto(this->x, this->y, {this->color[0], this->color[1], this->color[2]});
 }
 
 #endif

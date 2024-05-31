@@ -58,4 +58,14 @@ void line(float x1, float y1, float x2, float y2){
         glEnd();
     glPopMatrix();
 }
+void ponto(float x, float y, vector<float> cor){
+    glPushMatrix();
+        glColor3f( cor[0]/255, cor[1]/255, cor[2]/255);
+        //glTranslatef(100/TAMANHO_TELA_X*2, 200/TAMANHO_TELA_Y*2, 0);
+        glPointSize(300);
+        glBegin(GL_POINT_SIZE);
+            glVertex2f(x/TAMANHO_TELA_X, y/TAMANHO_TELA_Y);
+        glEnd();
+    glPopMatrix();
+}
 #endif
