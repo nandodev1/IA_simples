@@ -2,7 +2,7 @@
 #define AGENTE_H
 
 #include <vector>
-#include "./base/Camada.h"
+#include "./base/Camada.hpp"
 #include "../layout/obstaculos.h"
 #include "../IA/sensor.hpp"
 
@@ -158,13 +158,13 @@ void Agente::setColor(vector<int> color)
 Agente::Agente( float x, float y)
 {
 	this->updata = 0;
-	this->score +=5;
+	//this->score += 1;
 	caminho = "";
 	this->copyMap();
 
-	this->speed = 1;
+	this->speed = 6;
 	
-	this->camada1 = new Camada(10, 4, SAIDA_RELU_POSITIVA);
+	this->camada1 = new Camada(100, 4, SAIDA_RELU_POSITIVA);
 	this->camada1_2 = new Camada(4, 5, SAIDA_RELU_POSITIVA);
 	this->camada2_3 = new Camada(5, 4, SAIDA_RELU_POSITIVA);
 	this->camada2 = new Camada(5, 4, SAIDA_RELU);
@@ -174,7 +174,7 @@ Agente::Agente( float x, float y)
 	for(int i = 0; i < 100;)
 	{
 		this->sensores.push_back(Sensor(x, y, x, y, i));
-		i += 10;
+		i += 1;
 	}
 	this->score = 0;
 }
@@ -220,11 +220,13 @@ void Agente::procSaida()
 
 	vector<float> out = this->rede(this->sensorToFloat());
 	
-	float dir4 = out[0];
+	float dir4 = out[3];
 	float dir2 = out[1];
 	float dir3 = out[2];
-	float dir1 = out[2];
+	float dir1 = out[0];
 	
+	int saida = 0;
+
 	if(dir1 > 0)
 		this->mover(CIMA);
 	if(dir2 > 0)
@@ -238,7 +240,7 @@ void Agente::procSaida()
 void Agente::update()
 {
 	this->updata++;
-	this->score += 4;
+	this->score += 30;
 	for(int i = 0; i < this->sensores.size(); i++)
 	{
 		sensores[i].update();

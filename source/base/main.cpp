@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../IA/base/Perceptron.h"
-#include "../IA/base/Camada.h"
+#include "../IA/base/Camada.hpp"
 #include "../display/Framework.h"
 
 static string pathLayout = "";

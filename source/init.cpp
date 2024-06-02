@@ -2,7 +2,7 @@
 #include "./IA/sensor.hpp"
 #include "./layout/layout.h"
 #include "./layout/obstaculos.h"
-#include "./IA/base/Camada.h"
+#include "./IA/base/Camada.hpp"
 
 using namespace std;
 
@@ -10,6 +10,9 @@ Agente clonar(Agente agente);
 Agente getBestScore(vector<Agente> lista_agentes);
 vector<float> mutaCamada(Camada camada);
 Agente clone_mutacao(Agente ag);
+
+#define QUANT_AGENTES 20
+#define TIME_EPOCA 2000
 
 void setup()
 {
@@ -35,10 +38,10 @@ void loop()
 	
     //adiciona agente
     
-	if(i<100)
+	if(i < QUANT_AGENTES)
 	{
 		Agente ag = Agente(rand()%1200, rand()%900);
-		ag.setColor({rand()%249, rand()%249, rand()%249});
+		ag.setColor({rand()%200, rand()%249, rand()%249});
 		ag.setLimits({1300, 1300});
 		agentes.push_back(ag);
 		i++;
@@ -52,7 +55,7 @@ void loop()
 	for(int j = 0; j < agentes.size(); j++)
 	{
 		char ch = wall.getCharacterMap(agentes[j].getPosition()[0], agentes[j].getPosition()[1]);
-		if(ch == '#' || agentes[j].getUpdat() > 500)
+		if(ch == '#' || agentes[j].getUpdat() > TIME_EPOCA)
 		{
 			agentes_ranking.push_back(clonar(agentes[j]));
 			agentes.erase(agentes.begin() + j);
@@ -68,12 +71,13 @@ void loop()
 		epoca++;
 		Agente cloneMelhor = getBestScore(agentes_ranking);
 		agentes.push_back(cloneMelhor);
-		for(int i = 0; i < 100; i++)
+		for(int i = 0; i < QUANT_AGENTES; i++)
 		{
-			if(epoca < 20)
+			if(epoca < 300)
 			{
 				Agente cloneMutacao = clone_mutacao(cloneMelhor);
 				agentes.push_back(cloneMutacao);
+				//agentes.push_back(cloneMelhor);
 			}
 			else
 			{
@@ -91,16 +95,16 @@ vector<float> mutaCamada(Camada * camada)
 	vector<float> pesos = camada->get_pesos();
 	for(int i = 0; i < pesos.size(); i++)
 	{
-		int numero_aleatorio = rand() % 10;
-		if(numero_aleatorio < 3)
+		int numero_aleatorio = rand() % 100;
+		if(numero_aleatorio < 1)
 		{
 			int dire = rand() % 2;
 			if(dire < 1){
-				pesos[i] = pesos[i] * (float)((rand() % 10) / 10.);
+				pesos[i] = pesos[i] * (float)((rand() % 10) / 100.);
 			}
 			else
 			{
-				pesos[i] = pesos[i] * -(float)((rand() % 10) / 10.);
+				pesos[i] = pesos[i] * -(float)((rand() % 10) / 100.);
 			}
 		}
 	}
@@ -109,7 +113,6 @@ vector<float> mutaCamada(Camada * camada)
 
 Agente clone_mutacao(Agente ag)
 {
-	srand(time(NULL));
 	Agente tmp_agente(rand()%1200, rand()%900);
 
 	vector<float> pesos = mutaCamada(ag.camada1);
@@ -120,7 +123,7 @@ Agente clone_mutacao(Agente ag)
 	pesos = mutaCamada(ag.camada2_3);
 	tmp_agente.camada2->set_pesos(pesos);
 
-	tmp_agente.setColor(ag.getColor());
+	tmp_agente.setColor({rand()%200, rand()%249, rand()%249});
 
 	tmp_agente.setUpdat(0);
 
