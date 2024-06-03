@@ -106,15 +106,15 @@ vector<float> mutaCamada(Camada * camada)
 	for(int i = 0; i < pesos.size(); i++)
 	{
 		int numero_aleatorio = rand() % 100;
-		if(numero_aleatorio < 10)
+		if(numero_aleatorio < 40)
 		{
 			int dire = rand() % 2;
 			if(dire < 1){
-				pesos[i] = pesos[i] * (float)((rand() % 5) / 100.);
+				pesos[i] = pesos[i] * (float)((rand() % 10) / 1000.);
 			}
 			else
 			{
-				pesos[i] = pesos[i] * -(float)((rand() % 5) / 100.);
+				pesos[i] = pesos[i] * -(float)((rand() % 10) / 1000.);
 			}
 		}
 	}
@@ -195,7 +195,7 @@ int stringToint(string valor)
 Agente load_melhor(Agente ag)
 {
   	string line;
-  	ifstream melhor_agente ("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/bin/melhor_agente.ag");
+  	ifstream melhor_agente ("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/melhor_agente.ag");
 
 	vector<float> peso_c_1;
 	vector<float> peso_c_2;
