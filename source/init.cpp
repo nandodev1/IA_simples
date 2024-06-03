@@ -231,7 +231,7 @@ Agente load_melhor(Agente ag)
 void salva_melhor(Agente ag)
 {
 	ofstream melhor_agente;
-	melhor_agente.open ("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/bin/melhor_agente.ag", ios::out);
+	melhor_agente.open ("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/melhor_agente.ag", ios::out);
 	
 	vector<float> pesos_c_1 = ag.camada1->get_pesos();
 	vector<float> pesos_c_2 = ag.camada2->get_pesos();
