@@ -1,15 +1,19 @@
 #include<iostream>
-#include "../IA/agente.h"
-
-Agente clonar(Agente agente);
+#include <cstdlib>
 
 using namespace std;
 
 int main( int argc, char * argv [])
 {
-	Agente ag1 = Agente(300, 300);
 
-	Agente clone = clonar(ag1);
+string Text = "456";//string containing the number
+int Result;//number which will contain the result
 
-	return EXIT_SUCCESS;
+stringstream ss(); // stringstream used for the conversion initialized with the contents of Text
+
+
+
+if ( !(ss >> Result) )//give the value to Result using the characters in the string
+    Result = 0;//if that fails set Result to 0
+//Result now equal to 456 
 }
