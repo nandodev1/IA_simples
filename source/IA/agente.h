@@ -37,6 +37,8 @@ private:
 		string caminho;
 		void copyMap(void);
 		int updata;
+		int score_history;
+		int updata_history;//update do ultimo score adicionado.
 		
 	public:
 		vector<float> getPosition();
@@ -56,8 +58,12 @@ private:
 		vector<int> getColor(void);
 		int getUpdat(void);
 		void setUpdat(int);
+		virtual ~Agente();
 };
 
+Agente::~Agente()
+{
+}
 
 void Agente::setUpdat(int valor)
 {
@@ -107,6 +113,7 @@ bool Agente::isScore(void)
 		char chMap = caminho[posX + posY];
 		if(chMap != '.')
 		{
+			this->updata_history = this->updata;
 			this->score += 10;
 			caminho[posX + posY] = '.';
 			return true;
@@ -158,25 +165,24 @@ void Agente::setColor(vector<int> color)
 Agente::Agente( float x, float y)
 {
 	this->updata = 0;
-	//this->score += 1;
+	this->score += 1;
 	caminho = "";
 	this->copyMap();
-
-	this->speed = 6;
 	
-	this->camada1 = new Camada(100, 4, SAIDA_RELU_POSITIVA);
+	this->camada1 = new Camada(20, 4, SAIDA_RELU_POSITIVA);
 	this->camada1_2 = new Camada(4, 5, SAIDA_RELU_POSITIVA);
-	this->camada2_3 = new Camada(5, 4, SAIDA_RELU_POSITIVA);
-	this->camada2 = new Camada(5, 4, SAIDA_RELU);
+	this->camada2_3 = new Camada(5, 5, SAIDA_RELU_POSITIVA);
+	this->camada2 = new Camada(4, 5, SAIDA_RELU);
 	
 	this->x = x;
 	this->y = y;
 	for(int i = 0; i < 100;)
 	{
 		this->sensores.push_back(Sensor(x, y, x, y, i));
-		i += 1;
+		i += 5;
 	}
 	this->score = 0;
+	this->updata_history = 0;
 }
 
 vector<float> Agente::getPosition()
@@ -199,8 +205,8 @@ vector<float> Agente::getPosition()
 vector<float> Agente::rede(const vector<float> &input)
 {
 	vector<float> out_camada1 = this->camada1->saida(input);
-	vector<float> out_camada1_2 = this->camada1->saida(out_camada1);
-	vector<float> out_camada2_3 = this->camada1->saida(out_camada1_2);
+	//vector<float> out_camada1_2 = this->camada1->saida(out_camada1);
+	//vector<float> out_camada2_3 = this->camada1->saida(out_camada1_2);
 	vector<float> out = this->camada2->saida(out_camada1);
 	return out;
 }
@@ -235,12 +241,24 @@ void Agente::procSaida()
 		this->mover(ESQUERDA);
 	if(dir4 > 0)
 		this->mover(DIREITA);
+	if(dir4 > 0)
+	{
+		this->speed = 1;
+	}
+	else
+	{
+		this->speed = 0.5;
+	}
 }
 
 void Agente::update()
 {
 	this->updata++;
-	this->score += 30;
+	if(this->updata - this->updata_history >= 500)
+	{
+		this->updata = 99999;
+	}
+	this->score += 0;
 	for(int i = 0; i < this->sensores.size(); i++)
 	{
 		sensores[i].update();
