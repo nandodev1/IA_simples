@@ -23,7 +23,7 @@ class Perceptron
 
     public:
         Perceptron();
-        Perceptron( int quant_entradas,const string &tipo_saida);
+        Perceptron(int quant_entradas,const string &tipo_saida);
         virtual ~Perceptron();
         vector<float> pesos;
         float peso_bias;
@@ -104,7 +104,7 @@ float Perceptron::saida(const vector<float> &entradas)
 {
     if ( this->tipo_saida == SAIDA_SIGMOID)
         return this->ativacao_sigm(this->somatorio(entradas));
-    else if (this->tipo_saida == SAIDA_RELU)
+    else if (this->tipo_saida == SAIDA_RELU_POSITIVA)
     {
         return this->ativacao_relu_positiva(this->somatorio(entradas));
     }

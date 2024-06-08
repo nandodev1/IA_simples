@@ -5,7 +5,8 @@
 #include<string>
 
 #include "Formas.h"
-#include "../init.cpp"
+void loop(void);
+void keyboard(unsigned char key, int x, int y);
 
 using namespace std;
 
@@ -22,17 +23,16 @@ class Framework
         int largura;
         int altura;
     public:
-        Framework(string titulo, int largura, int altura, int * argc, char * argv[]);
+        Framework(string titulo, int largura, int altura, int argc, char * argv[]);
         ~Framework();
         void inicializa();
 };
 
-Framework::Framework(string titulo, int largura, int altura, int * argc, char * argv[])
+Framework::Framework(string titulo, int largura, int altura, int argc, char * argv[])
 {
-
 	TAMANHO_TELA_X = largura;
 	TAMANHO_TELA_Y = altura;
-    glutInit( argc, argv);
+    glutInit( &argc, argv);
     glutInitDisplayMode( GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize( largura, altura);
      glutInitWindowPosition(200,100);
@@ -40,8 +40,7 @@ Framework::Framework(string titulo, int largura, int altura, int * argc, char * 
     inicializa();
     glutDisplayFunc( desenha) ;
     glutIdleFunc(redesenha);
-    glutKeyboardFunc(keyboard);  
-    setup();
+    glutKeyboardFunc(keyboard);
     // glutFullScreen();
     glutMainLoop();
 }
@@ -61,7 +60,7 @@ void altera_tamanho_janela(GLsizei w, GLsizei h)
                    glViewport(0, 0, w, h);
 
                    // Inicializa o sistema de coordenadas
-                   glMatrixMode(GL_3D);
+                   glMatrixMode(GL_2D);
                    glLoadIdentity();
 
                 //    // Estabelece a janela de seleção (left, right, bottom, top)

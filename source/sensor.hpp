@@ -2,11 +2,11 @@
 #define SENSOR_H
 
 #include <vector>
-
-#include "../display/Formas.h"
-#include "../layout/layout.h"
-#include "../layout/obstaculos.h"
 #include <math.h>
+
+#include "Formas.h"
+#include "layout.h"
+#include "obstaculos.h"
 
 #define PI_2 ((3.14159265 * 2)/100)
 
@@ -14,12 +14,13 @@ class Sensor
 {
 	private:
 		vector<float> color = {0, 0, 0};
-		Paredes paredes = Paredes("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay", 10, 10, 130, 70);
+		Paredes paredes = Paredes("base2.lay", 10, 10, 130, 70);
 		float x_parent;
 		float y_parent;
 		float x_init;
 		float y_init;
 		float angulo;
+		bool line_show;
 		
 	public:
 		float x;
@@ -29,7 +30,13 @@ class Sensor
 		void setColor(vector<int> color);
 		float calcDist();
 		void setInitPosition(float x, float y);
+		void setLineShow(bool active);
 };
+
+void Sensor::setLineShow(bool active)
+{
+	this->line_show = active;
+}
 
 void Sensor::setInitPosition(float x, float y)
 {
@@ -68,6 +75,8 @@ Sensor::Sensor(float x, float y, float x_parent, float y_parent, float angle)
 	this->x_init = x;
 	this->y_init = y;
 	this->angulo = angle;
+
+	this->line_show = false;
 }
 
 //seleciona cor do agente
@@ -93,7 +102,10 @@ void Sensor::update(void)
 			//retangulo(this->x, this->y, 5.0, 5.0,{this->color[0], this->color[1], this->color[2]});
 			//* 2 ganbiarra braba
 			if(dist > 40.)
-				//line(this->x*2, this->y*2, this->x_init*2, this->y_init*2);
+			{
+				if(this->line_show)
+					line(this->x*2, this->y*2, this->x_init*2, this->y_init*2);
+			}
 			this->x = this->x_init;
 			this->y = this->y_init;
  			break;
