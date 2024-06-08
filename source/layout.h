@@ -1,9 +1,24 @@
+#ifndef LAYOUT_H
+#define LAYOUT_H
+
 #include <fstream>
 #include <string>
-#include "../display/Formas.h"
+#include "Formas.h"
 #include "layout.h"
 
+
 using namespace std;
+
+class Layout
+{
+	private:
+		string map;
+		
+	public:
+		Layout(string);
+		string loadLayout(string);
+		void update(void);
+};
 
 Layout::Layout(string path)
 {
@@ -47,3 +62,5 @@ string Layout::loadLayout(string path)
 	this->map = str;
 	return str;
 }
+
+#endif 

@@ -2,9 +2,9 @@
 #define AGENTE_H
 
 #include <vector>
-#include "./base/Camada.hpp"
-#include "../layout/obstaculos.h"
-#include "../IA/sensor.hpp"
+#include "Camada.hpp"
+#include "obstaculos.h"
+#include "sensor.hpp"
 
 #define CIMA 0
 #define BAIXO 1
@@ -19,7 +19,7 @@ using namespace std;
 class Agente
 {
 private:
-		Paredes * paredes = new Paredes("/media/pc/0237209b-a718-4850-99b1-fc52166addd4/home/pc/projeto_IA/simples_ia/IA_simples/source/layout/base.lay", 10, 10, 130, 70);
+		Paredes * paredes = new Paredes("base2.lay", 10, 10, 130, 70);
 		float xBack;
 		float yBack;
 		float x;
@@ -39,14 +39,14 @@ private:
 		int updata;
 		int score_history;
 		int updata_history;//update do ultimo score adicionado.
+		float speed;
 		
 	public:
 		vector<float> getPosition();
-		Agente( float x, float y);
+		Agente( float x, float y, int quantSensor);
 		void update();
 		void draw();
 		void setColor(vector<int>);
-		float speed;
 		void setLimits(vector<float>);
 		int getScore(void);
 		void setScore(int);
@@ -59,10 +59,23 @@ private:
 		int getUpdat(void);
 		void setUpdat(int);
 		virtual ~Agente();
+		void setLineShow(bool active);
 };
 
 Agente::~Agente()
 {
+	// delete camada1;
+	// delete camada2;
+	// delete camada2_3;
+	// delete camada1_2;
+}
+
+void Agente::setLineShow(bool active)
+{
+	for(int i = 0; i < sensores.size(); i++)
+		{
+			sensores[i].setLineShow(true);
+		}
 }
 
 void Agente::setUpdat(int valor)
@@ -162,24 +175,24 @@ void Agente::setColor(vector<int> color)
 	this->color[2] = color[2];
 }
 
-Agente::Agente( float x, float y)
+Agente::Agente( float x, float y, int quantSensor)
 {
 	this->updata = 0;
-	this->score += 1;
+	this->speed = 0;
 	caminho = "";
 	this->copyMap();
 	
-	this->camada1 = new Camada(20, 4, SAIDA_RELU_POSITIVA);
-	this->camada1_2 = new Camada(4, 5, SAIDA_RELU_POSITIVA);
+	this->camada1 = new Camada(quantSensor, 8, SAIDA_RELU_POSITIVA);
+	this->camada1_2 = new Camada(8, 5, SAIDA_RELU_POSITIVA);
 	this->camada2_3 = new Camada(5, 5, SAIDA_RELU_POSITIVA);
-	this->camada2 = new Camada(4, 5, SAIDA_RELU);
+	this->camada2 = new Camada(5, 5, SAIDA_RELU);
 	
 	this->x = x;
 	this->y = y;
 	for(int i = 0; i < 100;)
 	{
 		this->sensores.push_back(Sensor(x, y, x, y, i));
-		i += 5;
+		i += (100 / quantSensor);
 	}
 	this->score = 0;
 	this->updata_history = 0;
@@ -205,9 +218,9 @@ vector<float> Agente::getPosition()
 vector<float> Agente::rede(const vector<float> &input)
 {
 	vector<float> out_camada1 = this->camada1->saida(input);
-	//vector<float> out_camada1_2 = this->camada1->saida(out_camada1);
-	//vector<float> out_camada2_3 = this->camada1->saida(out_camada1_2);
-	vector<float> out = this->camada2->saida(out_camada1);
+	vector<float> out_camada1_2 = this->camada1->saida(out_camada1);
+	vector<float> out_camada2_3 = this->camada1->saida(out_camada1_2);
+	vector<float> out = this->camada2->saida(out_camada2_3);
 	return out;
 }
 
@@ -230,6 +243,7 @@ void Agente::procSaida()
 	float dir2 = out[1];
 	float dir3 = out[2];
 	float dir1 = out[0];
+	float dir5 = out[4];
 	
 	int saida = 0;
 
@@ -241,13 +255,13 @@ void Agente::procSaida()
 		this->mover(ESQUERDA);
 	if(dir4 > 0)
 		this->mover(DIREITA);
-	if(dir4 > 0)
+	if(dir5 > 0)
 	{
-		this->speed = 1;
+		this->speed = 0.5;
 	}
 	else
 	{
-		this->speed = 0.5;
+		this->speed = 0.25;
 	}
 }
 
@@ -258,7 +272,6 @@ void Agente::update()
 	{
 		this->updata = 99999;
 	}
-	this->score += 0;
 	for(int i = 0; i < this->sensores.size(); i++)
 	{
 		sensores[i].update();

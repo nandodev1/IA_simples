@@ -32,16 +32,20 @@ vector<float> Camada::get_pesos()
     vector<float> pesos;
     Perceptron neuro;
     int quant_neuronio = this->neuronios.size();
+    
     //Pega o primeiro neuronio para definir a quantidade pesos
     //considerando que todos neuronios das camadas tem a mesma quantidade de neuronio
-    int quant_pesos = this->neuronios[0].pesos.size();
+    int quant_pesos = this->neuronios[0].pesos.size() + 1;
     for ( int i = 0; i < quant_neuronio; i++)
+    {
+        pesos.push_back(this->neuronios[i].peso_bias);
         for( int j = 0; j < quant_pesos; j++)
         {
             neuro = this->neuronios[i];
             pesos.push_back( neuro.pesos[j]);
         }
-
+        //pesos.push_back(neuronios[i].peso_bias);
+    }
     return pesos;
 }
 
@@ -54,8 +58,9 @@ void Camada::set_pesos( vector<float> entradas)
         this->neuronios[i_neuronio].peso_bias = entradas[i];
         for ( int i_pesos = 0; i_pesos < quant_entradas; i_pesos++)
         {
-            this->neuronios[i_neuronio].pesos[i_pesos] = entradas[ i++];
+            this->neuronios[i_neuronio].pesos[i_pesos] = entradas[++i];
         }
+        i++;
     }
 }
 //cria uma camada da rede
